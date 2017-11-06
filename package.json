@@ -1,0 +1,16 @@
+{
+  "name": "test_contracts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Evan Botello",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel buildContract.js --out-file lib.js --no-comments"
+  },
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "solc": "^0.4.18",
+    "web3": "0.20.0"
+  }
+}
