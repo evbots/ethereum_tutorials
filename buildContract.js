@@ -1,6 +1,6 @@
-const fs = require("fs");
-const solc = require('solc');
-const Web3 = require('web3');
+import * as fs from 'fs';
+import solc from 'solc';
+import Web3 from 'web3';
 
 const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 const source = fs.readFileSync('contract.sol', 'utf8');
