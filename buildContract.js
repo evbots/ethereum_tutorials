@@ -7,7 +7,7 @@ const source = fs.readFileSync('contract.sol', 'utf8');
 const compiledContract = solc.compile(source, 1).contracts[':greeter'];
 const abi = compiledContract.interface;
 
-// append 0x so geth can parse
+// prepend 0x so geth can parse
 const bytecode = `0x${compiledContract.bytecode}`;
 const gasEstimate = web3.eth.estimateGas({data: bytecode});
 const greeterContract = web3.eth.contract(JSON.parse(abi));
