@@ -25,7 +25,7 @@ Make sure geth is running, if it's not already
 geth --rpc
 ```
 
-Build contract from source
+Transpile the build script so that it can be run.
 ```
 yarn build
 ```
@@ -45,4 +45,25 @@ Now, assuming you are in this project's directory, run code:
 node lib.js
 ```
 
-This will reach out to geth via over your local network via it's API, and attempt to create the contract. You can reference the rest of the beginner Ethereum tutorial mentioned at the beginning of the article for points on how to interact with your smart contract after it's mined by the network. You can also check out the contract on etherscan.io with your account address or transaction hash logged by this project's script.
+This will reach out to geth via over your local network via it's API, and attempt to create the contract. 
+
+Take note of the contract address after it's been mined. If geth has synced to the latest block, then you'll see this printed out. If not, you can always check your wallet address on etherscan.io and check the status of your contract. Once the contract has been mined, you can return to the geth javascript console and create an instance of your contract, and call `greet` on it.
+
+In order to do this, you will need two things: the contract's ABI, and the contract address. To get the contract ABI, I have created a simple script to print this out. Just run:
+```
+yarn printAbi
+```
+
+Inside the geth javascript console (hint: get there with `geth attach` in a new bash window), create your initialize your contract with the code:
+```
+var myContract = web3.eth.contract(YOUR_ABI).at(YOUR_CONTRACT_ADDRESS);
+```
+
+You can now call your contract methods:
+```
+myContract.greet();
+```
+and
+```
+myContract.kill();
+```

@@ -5,7 +5,8 @@
   "author": "Evan Botello",
   "license": "MIT",
   "scripts": {
-    "build": "babel buildContract.js --out-file lib.js --no-comments"
+    "build": "babel buildContract.js --out-file lib.js --no-comments",
+    "printAbi": "babel printAbi.js --out-file transpiledPrintAbi.js --no-comments && node transpiledPrintAbi.js"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
