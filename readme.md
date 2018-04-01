@@ -1,65 +1,59 @@
-## Greeter Contract
+## Ethereum Tutorials
 
-A simple hello world Solidity smart contract.
+These contracts come from the [Ethereum Go Wiki Tutorial section](https://github.com/ethereum/go-ethereum/wiki/Contract-Tutorial).
+I have modified the build process, but the contract code is exactly the same.
 
 ### Background
 
-This contract code comes directly from the main Ethereum smart contract beginner tutorial, located [here.](https://www.ethereum.org/greeter) However, the tutorial referenced an old [web3](https://github.com/ethereum/web3.js/) specification, so I decided to slightly modify my approach to building the hello world contract.
-
-### Prerequisites
-
-* Ability to obtain Ether. Use an exchange to purchase it or bum some off a friend.
-* Download and [Go Ethereum](https://github.com/ethereum/go-ethereum) and run with the command `geth --rpc`
-* Create an ethereum account with geth via command line or javascript console. [More on that here.](https://github.com/ethereum/go-ethereum/wiki/Managing-your-accounts)
-* Transfer ether to your new account.
+In order to test these contracts, I advise you to run a node connected to an Ethereum testnet like ropsten. These instructions include connecting to the ropsten test net.
 
 ### Setup
 
+These contracts were compliled and deployed with the following software versions:
+* Geth/v1.8.3-stable
+* Node v6.11.1
+* Yarn 1.3.2
+
 After cloning this repository, install dependencies.
 ```
-yarn
+yarn install
 ```
 
-Make sure geth is running, if it's not already
+Make sure geth is running with the testnet and rpc options, if it's not already. If this is your first time running geth on the testnet, you will most likely need to let your node sync the blockchain (30 minutes).
 ```
-geth --rpc
+geth --testnet --rpc
 ```
 
-Transpile the build script so that it can be run.
+Jump into the geth console. The following path assumes MacOS. Adjust accordingly.
+```
+geth attach '/Users/USER_NAME_HERE/Library/Ethereum/testnet/geth.ipc'
+```
+
+If you don't have an account yet then create one. After creating an account, use a testnet faucet to send Ether to it. You'll need to spend it to mine a contract into the blockchain.
+```
+personal.newAccount();
+```
+
+Then unlock your account for spending money to mine a contract.
+```
+personal.unlockAccount(eth.accounts[0], <Password here>, 50000);
+```
+
+Now, assuming you are in this project's directory, compile and run the build script which will create a transaction to mine your contract.
 ```
 yarn build
 ```
 
-Assuming you've transfered ether to your account (not much is needed), unlock your account so you can spend money. You can do this via the geth console. Assuming geth is already up and running, open a new terminal window and use these commands:
-```
-geth attach
-```
+This will reach out to geth via over your local network via it's API, and attempt to create the contracts. 
 
-Then in the console type:
-```
-personal.unlockAccount(eth.accounts[0], <Password here>, 15000)
-```
+If geth has synced to the latest block, then you'll see an object containing the address and abi for each contract printed, as well as a helpful command to initialize the contract in the geth console.
 
-Now, assuming you are in this project's directory, run code:
-```
-node lib.js
-```
-
-This will reach out to geth via over your local network via it's API, and attempt to create the contract. 
-
-Take note of the contract address after it's been mined. If geth has synced to the latest block, then you'll see this printed out. If not, you can always check your wallet address on etherscan.io and check the status of your contract. Once the contract has been mined, you can return to the geth javascript console and create an instance of your contract, and call `greet` on it.
-
-In order to do this, you will need two things: the contract's ABI, and the contract address. To get the contract ABI, I have created a simple script to print this out. Just run:
-```
-yarn printAbi
-```
-
-Inside the geth javascript console (hint: get there with `geth attach` in a new bash window), create your initialize your contract with the code:
+Inside the geth javascript console, create your initialize your contract with the following code, or use the command printed out by the build script.
 ```
 var myContract = web3.eth.contract(YOUR_ABI).at(YOUR_CONTRACT_ADDRESS);
 ```
 
-You can now call your contract methods:
+You can now call your contract methods. For example:
 ```
 myContract.greet();
 ```
