@@ -55,9 +55,9 @@ Inside the geth javascript console, create your initialize your contract with th
 
 You can now call your contract methods. For example:
 ```
-myContract.greet();
+> myContract.greet();
 ```
 and
 ```
-myContract.kill();
+> myContract.kill();
 ```
