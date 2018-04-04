@@ -36,17 +36,21 @@ geth --testnet --rpc
 
 Jump into the geth console. The following path assumes MacOS. Adjust accordingly.
 ```
+<<<<<<< HEAD
 geth attach '/Users/USER_HERE/Library/Ethereum/testnet/geth.ipc'
+=======
+geth attach '~/Library/Ethereum/testnet/geth.ipc'
+>>>>>>> 439b42e1dcd4df79b9e99853691260cab8f5548f
 ```
 
-If you don't have an account yet then create one. After creating an account, use a testnet faucet to send Ether to it. You'll need to spend it to mine a contract into the blockchain.
+If you don't have an account yet then create one in the geth console. After creating an account, use a testnet faucet to send Ether to it. You'll need to spend it to mine a contract into the blockchain.
 ```
-personal.newAccount();
+> personal.newAccount();
 ```
 
 Then unlock your account for spending money to mine a contract.
 ```
-personal.unlockAccount(eth.accounts[0], <Password here>, 50000);
+> personal.unlockAccount(eth.accounts[0], <Password here>, 50000);
 ```
 
 Now, assuming you are in this project's directory, compile and run one of the scripts to deploy a contract:
@@ -60,14 +64,14 @@ If geth has synced to the latest block, then you'll see an object containing the
 
 Inside the geth javascript console, create your initialize your contract with the following code, or use the command printed out by the build script.
 ```
-var myContract = web3.eth.contract(YOUR_ABI).at(YOUR_CONTRACT_ADDRESS);
+> var myContract = web3.eth.contract(YOUR_ABI).at(YOUR_CONTRACT_ADDRESS);
 ```
 
 You can now call your contract methods. For example:
 ```
-myContract.greet();
+> myContract.greet();
 ```
 and
 ```
-myContract.kill();
+> myContract.kill();
 ```
