@@ -36,11 +36,7 @@ geth --testnet --rpc
 
 Jump into the geth console. The following path assumes MacOS. Adjust accordingly.
 ```
-<<<<<<< HEAD
 geth attach '/Users/USER_HERE/Library/Ethereum/testnet/geth.ipc'
-=======
-geth attach '~/Library/Ethereum/testnet/geth.ipc'
->>>>>>> 439b42e1dcd4df79b9e99853691260cab8f5548f
 ```
 
 If you don't have an account yet then create one in the geth console. After creating an account, use a testnet faucet to send Ether to it. You'll need to spend it to mine a contract into the blockchain.
