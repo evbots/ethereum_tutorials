@@ -3,9 +3,6 @@ import * as fs from 'fs';
 import solc from 'solc';
 import Web3 from 'web3';
 
-// A list of folders to look for contracts to mine.
-const folders = ['contract_greeter', 'contract_coin'];
-
 // Connect to a local Ethereum node over RPC.
 const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 
@@ -46,17 +43,14 @@ const buildDeployOptions = (compiledContract) => {
   };
 };
 
-// Create an array of promises to wait on.
-const contractsToCreate = folders.map((folder) => {
-  const contractConfig = require(`./${folder}/config`);
-  const source = fs.readFileSync(`./${folder}/contract.sol`, 'utf8');
-  const compiledContract = solc.compile(source, 1).contracts[`:${contractConfig.contractName}`];
-  const abiObject = JSON.parse(compiledContract.interface);
-  const contract = web3.eth.contract(abiObject);
-  const options = buildDeployOptions(compiledContract);
-  const args = contractConfig.params.concat([options]);
-  return deployContractPromise(contractConfig.contractName, contract, args);
-});
-
-// After all contracts are mined, print the results.
-Promise.all(contractsToCreate).then((results) => console.log(results));
+const folder = process.env.CONTRACT_PATH;
+const contractConfig = require(`./${folder}/config`);
+const source = fs.readFileSync(`./${folder}/contract.sol`, 'utf8');
+const compiled = solc.compile(source, 1);
+const compiledContract = compiled.contracts[`:${contractConfig.contractName}`];
+const abiObject = JSON.parse(compiledContract.interface);
+const contract = web3.eth.contract(abiObject);
+const options = buildDeployOptions(compiledContract);
+const args = contractConfig.params.concat([options]);
+deployContractPromise(contractConfig.contractName, contract, args)
+  .then((results) => console.log(results));

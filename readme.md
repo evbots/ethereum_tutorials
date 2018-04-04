@@ -3,6 +3,16 @@
 These contracts come from the [Ethereum Go Wiki Tutorial section](https://github.com/ethereum/go-ethereum/wiki/Contract-Tutorial).
 I have modified the build process, but the contract code is exactly the same.
 
+### TL;DR
+Deploy these contracts with the following commands:
+```
+yarn deployGreeterContract
+
+yarn deployCoinContract
+
+TOKEN_CONTRACT_ADDRESS='token_address' yarn deployCrowdfundContract
+```
+
 ### Background
 
 In order to test these contracts, I advise you to run a node connected to an Ethereum testnet like ropsten. These instructions include connecting to the ropsten test net.
@@ -26,7 +36,7 @@ geth --testnet --rpc
 
 Jump into the geth console. The following path assumes MacOS. Adjust accordingly.
 ```
-geth attach '/Users/USER_NAME_HERE/Library/Ethereum/testnet/geth.ipc'
+geth attach '/Users/USER_HERE/Library/Ethereum/testnet/geth.ipc'
 ```
 
 If you don't have an account yet then create one. After creating an account, use a testnet faucet to send Ether to it. You'll need to spend it to mine a contract into the blockchain.
@@ -39,14 +49,14 @@ Then unlock your account for spending money to mine a contract.
 personal.unlockAccount(eth.accounts[0], <Password here>, 50000);
 ```
 
-Now, assuming you are in this project's directory, compile and run the build script which will create a transaction to mine your contract.
+Now, assuming you are in this project's directory, compile and run one of the scripts to deploy a contract:
 ```
-yarn build
+yarn deployGreeterContract
 ```
 
-This will reach out to geth via over your local network via it's API, and attempt to create the contracts. 
+This will reach out to geth via over your local network via it's API, and attempt to create the contract. 
 
-If geth has synced to the latest block, then you'll see an object containing the address and abi for each contract printed, as well as a helpful command to initialize the contract in the geth console.
+If geth has synced to the latest block, then you'll see an object containing the address and abi for the contract printed, as well as a helpful command to initialize the contract in the geth console.
 
 Inside the geth javascript console, create your initialize your contract with the following code, or use the command printed out by the build script.
 ```
